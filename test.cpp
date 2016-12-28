@@ -1,17 +1,33 @@
 #include <iostream>
 #include <stdio.h>
 #include <string.h>
+#include <fstream>
+#include <math.h>
+#include <typeinfo>
+#include <vector>
 
 #include "class/mysql_connection.h"
+#include "libs/json.hpp"
+
 using namespace std;
+using json = nlohmann::json;
 
 int main()
 {
-	mysql_connection *sql = new mysql_connection("192.168.1.38", "geodasilva123", "Shinigami123", "game");
+	
+	fstream f("game_structure.json");
+	ofstream g("test.txt");
+	char c;
+	string s;
+	// while(f>>c){
+	// 	s.push_back(c);
+	// }
 
-	sql->querry("insert into tabela values(5,6,7,8)");
-	sql->querry("select * from tabela");
-	sql->print();
+	json j;
+	f >> j;
+	//j = json::parse(s);
 
+	cout << j["1"]["B"][0] << endl;
+	cout << j["1"]["B"][0+4] << endl;
 	return 1;
 }

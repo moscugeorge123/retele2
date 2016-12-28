@@ -34,7 +34,10 @@ public:
 	{
 		mysql_query(this->conn, query);
 		if(!(this->res = mysql_store_result(this->conn)))
-			 return NULL;
+		{
+			this->Error();
+			return NULL;
+		}
 		else return this->res;
 	}
 
@@ -114,7 +117,10 @@ public:
 
 	void Error()
 	{
-		fprintf(stderr, "MYSQL[%d] %s\n",  mysql_errno(this->conn), mysql_error(this->conn));
+		if(mysql_errno(this->conn)){
+			fprintf(stderr, "MYSQL[%d] %s\n",  mysql_errno(this->conn), mysql_error(this->conn));
+			exit(2);
+		}
 	}
 
 	void closeSQL()
