@@ -4,7 +4,7 @@ private:
 	int x;
 	int y;
 	int type; /* 0 => NULL_cell, 1 => path_cell, 2 => B_cell, 3 => start_cell, 4 => finish_cell */
-	cell nextCell[4];
+	cell *nextCell[4];
 public:
 	cell(int x, int y)
 	{

@@ -15,7 +15,7 @@ private:
 		this->server.sin_addr.s_addr = htonl (INADDR_ANY);
 		this->server.sin_port = htons (this->port);
 
-		this->setSocket();
+		return this->setSocket();
 	}
 
 	bool setSocket()
@@ -53,7 +53,7 @@ public:
 	    return true;
 	}
 
-	int sAccept()
+	int Accept()
 	{
 		socklen_t length = sizeof(this->from);
 		return accept(this->serverSocket, (struct sockaddr*) &this->from, &length);
@@ -61,10 +61,22 @@ public:
 
 	Server(int port)
 	{
-		this->setPort(port);
-		this->setServer();
-		this->sBind();
-		this->sListen();
+		if(!this->setPort(port)){
+			printf("Eroare la Port!\n");
+			exit(3);
+		}
+		if(!this->setServer()){
+			printf("Eroare la Socket!\n");
+			exit(3);
+		}
+		if(!this->sBind()) {
+			printf("Eroare la Bind!\n");
+			exit(3);
+		}
+		if(!this->sListen()){
+			printf("Eroare la Listen!\n");
+			exit(3);
+		}
 	}
 	~Server();
 	
